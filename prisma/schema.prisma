@@ -19,3 +19,11 @@ model User {
   sendfoxError   String?  // optional error message
   createdAt     DateTime @default(now())
 }
+
+model Setting {
+  id               String   @id @default(cuid())
+  recaptcha_enabled Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  @@map("settings")
+}

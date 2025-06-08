@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
+import { isRecaptchaEnabled } from '@/lib/settings';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
@@ -7,12 +8,30 @@ import { serialize } from 'cookie';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ message: 'Method Not Allowed' });
 
-  const { email, password } = req.body;
+  const { email, password, recaptchaToken } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'Missing email or password.' });
   }
 
   try {
+    if (await isRecaptchaEnabled()) {
+      if (!recaptchaToken) {
+        return res.status(400).json({ message: 'Missing captcha token' })
+      }
+      const verify = await fetch(
+        'https://www.google.com/recaptcha/api/siteverify',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+        }
+      )
+      const data = await verify.json()
+      if (!data.success) {
+        return res.status(400).json({ message: 'Invalid captcha' })
+      }
+    }
+
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 

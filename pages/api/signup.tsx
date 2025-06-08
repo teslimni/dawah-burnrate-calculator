@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
+import { isRecaptchaEnabled } from '@/lib/settings';
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end('Method Not Allowed');
 
-  const { name, email, password, gdprConsented } = req.body;
+  const { name, email, password, gdprConsented, recaptchaToken } = req.body;
 
 
   if (!name || !email || !password || gdprConsented !== true) {
@@ -13,6 +14,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    if (await isRecaptchaEnabled()) {
+      if (!recaptchaToken) {
+        return res.status(400).json({ message: 'Missing captcha token' })
+      }
+      const verify = await fetch(
+        'https://www.google.com/recaptcha/api/siteverify',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+        }
+      )
+      const data = await verify.json()
+      if (!data.success) {
+        return res.status(400).json({ message: 'Invalid captcha' })
+      }
+    }
+
     // Check if user exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {

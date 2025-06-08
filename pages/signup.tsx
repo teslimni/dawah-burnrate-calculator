@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { NextPage } from 'next';
+import Head from 'next/head';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -16,6 +17,14 @@ const Signup: NextPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [gdprConsented, setGdprConsented] = useState(false);
   const [error, setError] = useState('');
+  const [recaptchaEnabled, setRecaptchaEnabled] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => setRecaptchaEnabled(data.recaptchaEnabled))
+      .catch(() => setRecaptchaEnabled(false))
+  }, [])
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,10 +43,18 @@ const Signup: NextPage = () => {
     }
 
     try {
+      const recaptchaToken = recaptchaEnabled
+        ? (document.querySelector('textarea[name="g-recaptcha-response"]') as HTMLTextAreaElement)?.value || ''
+        : ''
+      if (recaptchaEnabled && !recaptchaToken) {
+        setError('Please complete the CAPTCHA.')
+        return
+      }
+
       const res = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, gdprConsented }),
+        body: JSON.stringify({ name, email, password, gdprConsented, recaptchaToken }),
       });
 
 
@@ -72,6 +89,15 @@ const Signup: NextPage = () => {
             <Input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <Input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+
+            {recaptchaEnabled && (
+              <>
+                <Head>
+                  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                </Head>
+                <div className="g-recaptcha" data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}></div>
+              </>
+            )}
 
             <div className="flex items-center gap-2">
               <Checkbox id="gdpr" checked={gdprConsented} onCheckedChange={(checked) => setGdprConsented(checked === true)} />
