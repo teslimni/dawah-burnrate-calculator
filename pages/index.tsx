@@ -36,26 +36,16 @@ const Home: NextPage = () => {
 
       <div className="mt-12 text-sm text-slate-500">
         By using this tool, you accept our{' '}
-        <Link href="/privacy" className="underline hover:text-slate-700">
-          Privacy Policy
-        </Link>{' '}
-        and{' '}
-        <Link href="/terms" className="underline hover:text-slate-700">
-          Terms of Service
-        </Link>
-        .
+        <Link href="/privacy">Privacy Policy</Link>{' '}and{' '}
+        <Link href="/terms">Terms of Service</Link>.
       </div>
 
       <footer className="mt-16 text-xs text-slate-400 flex flex-col items-center gap-2">
         <span>&copy; {new Date().getFullYear()} UmmahBuilders. All rights reserved.</span>
         <div className="flex gap-4">
-          <Link href="/privacy" className="underline hover:text-slate-600">
-            Privacy Policy
-          </Link>
+          <Link href="/privacy">Privacy Policy</Link>
           <span>|</span>
-          <Link href="/terms" className="underline hover:text-slate-600">
-            Terms of Service
-          </Link>
+          <Link href="/terms">Terms of Service</Link>
         </div>
       </footer>
     </main>

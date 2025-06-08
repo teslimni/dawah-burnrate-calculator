@@ -10,11 +10,7 @@ const Privacy: NextPage = () => {
         placeholder describing how user data is handled.
       </p>
       <p>
-        Return to the{' '}
-        <Link href="/" className="underline">
-          home page
-        </Link>
-        .
+        Return to the <Link href="/">home page</Link>.
       </p>
     </main>
   );

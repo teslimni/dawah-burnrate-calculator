@@ -120,7 +120,7 @@ const Signup: NextPage = () => {
       <h1 className="text-2xl font-bold text-center">Create an Account</h1>
       <Card>
         <CardContent className="space-y-4 pt-6">
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSignup} className="space-y-3">
             <Input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
             <Input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -134,11 +134,11 @@ const Signup: NextPage = () => {
               />
               <label htmlFor="gdpr" className="text-sm">
                 I consent to the{' '}
-                <Link href="/privacy" className="underline">
+                <Link href="/privacy">
                   Privacy Policy
                 </Link>{' '}
                 and{' '}
-                <Link href="/terms" className="underline">
+                <Link href="/terms">
                   Terms of Service
                 </Link>
               </label>
@@ -157,9 +157,7 @@ const Signup: NextPage = () => {
 
           <p className="text-sm text-center text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/login" className="underline text-green-600 hover:text-green-700">
-              Log in
-            </Link>
+            <Link href="/login">Log in</Link>
           </p>
         </CardContent>
       </Card>
