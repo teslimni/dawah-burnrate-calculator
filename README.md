@@ -61,3 +61,4 @@ If you prefer to build the CSS manually you can watch the files with:
 ```bash
 npx tailwindcss -o styles/tailwind.css --watch
 ```
+
