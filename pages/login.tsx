@@ -65,9 +65,7 @@ const Login: NextPage = () => {
 
           <p className="text-sm text-center text-muted-foreground">
             Don’t have an account?{' '}
-            <Link href="/signup" className="underline text-green-600 hover:text-green-700">
-              Sign up here
-            </Link>
+            <Link href="/signup">Sign up here</Link>
           </p>
         </CardContent>
       </Card>

@@ -134,11 +134,11 @@ const Signup: NextPage = () => {
               />
               <label htmlFor="gdpr" className="text-sm">
                 I consent to the{' '}
-                <Link href="/privacy" className="underline">
+                <Link href="/privacy">
                   Privacy Policy
                 </Link>{' '}
                 and{' '}
-                <Link href="/terms" className="underline">
+                <Link href="/terms">
                   Terms of Service
                 </Link>
               </label>
@@ -157,9 +157,7 @@ const Signup: NextPage = () => {
 
           <p className="text-sm text-center text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/login" className="underline text-green-600 hover:text-green-700">
-              Log in
-            </Link>
+            <Link href="/login">Log in</Link>
           </p>
         </CardContent>
       </Card>

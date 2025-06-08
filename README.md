@@ -62,4 +62,3 @@ If you prefer to build the CSS manually you can watch the files with:
 npx tailwindcss -o styles/tailwind.css --watch
 ```
 
-The compiled CSS is written to `styles/tailwind.css`.
