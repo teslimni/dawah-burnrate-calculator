@@ -18,4 +18,15 @@ model User {
   sendfoxStatus  String   @default("pending") // "pending" | "success" | "failed"
   sendfoxError   String?  // optional error message
   createdAt     DateTime @default(now())
+  burnItems     BurnItem[]
+}
+
+model BurnItem {
+  id       String  @id @default(cuid())
+  user     User    @relation(fields: [userId], references: [id])
+  userId   String
+  category String
+  label    String
+  value    Float
+  createdAt DateTime @default(now())
 }
