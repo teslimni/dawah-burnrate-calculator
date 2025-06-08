@@ -42,7 +42,7 @@ const Login: NextPage = () => {
       <h1 className="text-2xl font-bold text-center">Welcome Back</h1>
       <Card>
         <CardContent className="space-y-4 pt-6">
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} className="space-y-3">
             <Input
               type="email"
               placeholder="Email Address"
@@ -65,9 +65,7 @@ const Login: NextPage = () => {
 
           <p className="text-sm text-center text-muted-foreground">
             Don’t have an account?{' '}
-            <Link href="/signup" className="underline text-green-600 hover:text-green-700">
-              Sign up here
-            </Link>
+            <Link href="/signup">Sign up here</Link>
           </p>
         </CardContent>
       </Card>

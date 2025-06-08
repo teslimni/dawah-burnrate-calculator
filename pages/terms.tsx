@@ -10,11 +10,7 @@ const Terms: NextPage = () => {
         the basic conditions for using the application.
       </p>
       <p>
-        Return to the{' '}
-        <Link href="/" className="underline">
-          home page
-        </Link>
-        .
+        Return to the <Link href="/">home page</Link>.
       </p>
     </main>
   );
