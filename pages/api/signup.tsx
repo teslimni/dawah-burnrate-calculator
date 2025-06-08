@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { randomBytes } from 'crypto';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end('Method Not Allowed');
 
-  const { name, email, password, gdprConsented } = req.body;
+  const { name, email, password, gdprConsented, referralCode } = req.body;
 
 
   if (!name || !email || !password || gdprConsented !== true) {
@@ -19,6 +20,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(409).json({ message: 'Email already registered.' });
     }
 
+    let referredById: string | null = null;
+    if (referralCode) {
+      const ref = await prisma.referral.findUnique({ where: { referralCode } });
+      if (ref) {
+        referredById = ref.userId;
+      }
+    }
+
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
 
@@ -30,6 +39,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         passwordHash,
         gdprConsented,
         emailConfirmed: false,
+      },
+    });
+
+    const newReferralCode = randomBytes(4).toString('hex');
+    await prisma.referral.create({
+      data: {
+        userId: newUser.id,
+        referralCode: newReferralCode,
+        referredUserId: referredById,
       },
     });
 
