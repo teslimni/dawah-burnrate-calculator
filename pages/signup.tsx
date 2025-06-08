@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const Signup: NextPage = () => {
   const router = useRouter();
+  const referralCode = typeof router.query.ref === 'string' ? router.query.ref : '';
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,7 +38,7 @@ const Signup: NextPage = () => {
       const res = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, gdprConsented }),
+        body: JSON.stringify({ name, email, password, gdprConsented, referralCode }),
       });
 
 

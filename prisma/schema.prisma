@@ -30,3 +30,14 @@ model BurnItem {
   value    Float
   createdAt DateTime @default(now())
 }
+
+model Referral {
+  id             String  @id @default(cuid())
+  userId         String
+  referralCode   String  @unique
+  referredUserId String?
+  createdAt      DateTime @default(now())
+
+  user           User    @relation("UserReferral", fields: [userId], references: [id])
+  referredUser   User?   @relation("ReferredBy", fields: [referredUserId], references: [id])
+}
