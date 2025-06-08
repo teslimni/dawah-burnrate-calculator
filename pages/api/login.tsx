@@ -7,7 +7,7 @@ import { serialize } from 'cookie';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ message: 'Method Not Allowed' });
 
-  const { email, password } = req.body;
+  const { email, password, location_city, location_country } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'Missing email or password.' });
   }
@@ -18,6 +18,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const isValid = await bcrypt.compare(password, user.passwordHash);
     if (!isValid) return res.status(401).json({ message: 'Invalid credentials' });
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        location_city,
+        location_country,
+      },
+    });
 
     // Create JWT token
     const token = jwt.sign(

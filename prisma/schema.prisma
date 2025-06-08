@@ -17,5 +17,7 @@ model User {
   gdprConsented Boolean
   sendfoxStatus  String   @default("pending") // "pending" | "success" | "failed"
   sendfoxError   String?  // optional error message
+  location_city String?
+  location_country String?
   createdAt     DateTime @default(now())
 }

@@ -16,9 +16,56 @@ const Signup: NextPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [gdprConsented, setGdprConsented] = useState(false);
   const [error, setError] = useState('');
+  const [locationCity, setLocationCity] = useState<string | null>(null);
+  const [locationCountry, setLocationCountry] = useState<string | null>(null);
+
+  const getFallbackLocation = async () => {
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      if (!res.ok) throw new Error('ipapi failed');
+      const data = await res.json();
+      setLocationCity(data.city ?? null);
+      setLocationCountry(data.country_name ?? null);
+    } catch {
+      setLocationCity(null);
+      setLocationCountry(null);
+    }
+  };
+
+  const requestLocation = (): Promise<void> => {
+    return new Promise((resolve) => {
+      if (!navigator.geolocation) {
+        getFallbackLocation().then(() => resolve());
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          try {
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`
+            );
+            const data = await res.json();
+            setLocationCity(
+              data.address.city || data.address.town || data.address.village || null
+            );
+            setLocationCountry(data.address.country || null);
+          } catch {
+          await getFallbackLocation();
+          }
+          resolve();
+        },
+        async () => {
+          await getFallbackLocation();
+          resolve();
+        },
+        { timeout: 5000 }
+      );
+    });
+  };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    await requestLocation();
 
     if (!name || !email || !password || !confirmPassword) {
       setError('All fields are required.');
@@ -37,7 +84,14 @@ const Signup: NextPage = () => {
       const res = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, gdprConsented }),
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          gdprConsented,
+          location_city: locationCity,
+          location_country: locationCountry,
+        }),
       });
 
 

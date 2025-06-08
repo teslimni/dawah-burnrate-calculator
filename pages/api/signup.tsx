@@ -5,7 +5,14 @@ import bcrypt from 'bcryptjs';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end('Method Not Allowed');
 
-  const { name, email, password, gdprConsented } = req.body;
+  const {
+    name,
+    email,
+    password,
+    gdprConsented,
+    location_city,
+    location_country,
+  } = req.body;
 
 
   if (!name || !email || !password || gdprConsented !== true) {
@@ -30,6 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         passwordHash,
         gdprConsented,
         emailConfirmed: false,
+        location_city,
+        location_country,
       },
     });
 
