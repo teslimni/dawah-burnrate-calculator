@@ -28,10 +28,16 @@ const UserDropdown = ({ email }: { email: string }) => {
           <Link href="/dashboard">Dashboard</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
+          <Link href="/burn-rate-calculator">Calculator</Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
           <Link href="/referrals">Referrals</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
           <Link href="/profile">Profile</Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
+          <Link href="/settings">Settings</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Separator className="h-px bg-slate-200 my-2" />
         <DropdownMenu.Item
