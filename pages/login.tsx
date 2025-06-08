@@ -28,6 +28,9 @@ const Login: NextPage = () => {
       });
 
       if (!res.ok) throw new Error('Invalid credentials');
+      if (!localStorage.getItem('hasLoggedIn')) {
+        localStorage.setItem('hasLoggedIn', 'true');
+      }
       router.push('/dashboard');
     } catch (err) {
       setError('Login failed. Please check your credentials.');
