@@ -45,8 +45,17 @@ const Home: NextPage = () => {
         .
       </div>
 
-      <footer className="mt-16 text-xs text-slate-400">
-        &copy; {new Date().getFullYear()} UmmahBuilders. All rights reserved.
+      <footer className="mt-16 text-xs text-slate-400 flex flex-col items-center gap-2">
+        <span>&copy; {new Date().getFullYear()} UmmahBuilders. All rights reserved.</span>
+        <div className="flex gap-4">
+          <Link href="/privacy" className="underline hover:text-slate-600">
+            Privacy Policy
+          </Link>
+          <span>|</span>
+          <Link href="/terms" className="underline hover:text-slate-600">
+            Terms of Service
+          </Link>
+        </div>
       </footer>
     </main>
   );
