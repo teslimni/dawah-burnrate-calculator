@@ -44,7 +44,7 @@ const Signup: NextPage = () => {
       if (!res.ok) throw new Error('Signup failed');
       router.push('/dashboard');
     } catch (err) {
-      setError(res.message);
+      setError((err as Error).message);
     }
   };
 

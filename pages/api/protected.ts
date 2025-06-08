@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { verifyToken } from '@/lib/auth';
+import { getUserFromRequest } from '@/lib/auth';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const user = verifyToken(req);
+  const user = getUserFromRequest(req);
   if (!user) {
     return res.status(401).json({ message: 'Unauthorized. Please log in.' });
   }
