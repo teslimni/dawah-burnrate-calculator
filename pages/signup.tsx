@@ -74,13 +74,20 @@ const Signup: NextPage = () => {
             <Input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
 
             <div className="flex items-center gap-2">
-              <Checkbox id="gdpr" checked={gdprConsented} onCheckedChange={(checked) => setGdprConsented(checked === true)} />
+              <Checkbox
+                id="gdpr"
+                checked={gdprConsented}
+                onCheckedChange={(checked) => setGdprConsented(checked === true)}
+              />
               <label htmlFor="gdpr" className="text-sm">
                 I consent to the{' '}
                 <Link href="/privacy" className="underline">
                   Privacy Policy
+                </Link>{' '}
+                and{' '}
+                <Link href="/terms" className="underline">
+                  Terms of Service
                 </Link>
-                
               </label>
             </div>
 
