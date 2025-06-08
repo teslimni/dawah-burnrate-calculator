@@ -35,6 +35,18 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## Environment variables
+
+Before running the app locally make sure to create a `.env` file in the project root with at least the following variables:
+
+```env
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="your-secret-key"
+SENDFOX_API_TOKEN=""
+```
+
+Run `npx prisma db push` to create the SQLite database defined in `prisma/schema.prisma`.
+
 ## Building Styles
 
 Tailwind CSS is compiled automatically when running the development server:

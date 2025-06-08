@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { randomBytes } from 'crypto';
+import jwt from 'jsonwebtoken';
+import { serialize } from 'cookie';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end('Method Not Allowed');
@@ -109,6 +111,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
     await sendToSendFox();
 
+    const token = jwt.sign(
+      { id: newUser.id, email: newUser.email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '7d' }
+    );
+
+    const cookie = serialize('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    res.setHeader('Set-Cookie', cookie);
     return res.status(201).json({ message: 'User created successfully', userId: newUser.id });
   } catch (err) {
     console.error(err);

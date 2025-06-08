@@ -25,19 +25,19 @@ const UserDropdown = ({ email }: { email: string }) => {
         align="end"
       >
         <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
-          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/dashboard" className="text-primary">Dashboard</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
-          <Link href="/burn-rate-calculator">Calculator</Link>
+          <Link href="/burn-rate-calculator" className="text-primary">Calculator</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
-          <Link href="/referrals">Referrals</Link>
+          <Link href="/referrals" className="text-primary">Referrals</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
-          <Link href="/profile">Profile</Link>
+          <Link href="/profile" className="text-primary">Profile</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item className="py-2 px-3 hover:bg-slate-100 rounded-md">
-          <Link href="/settings">Settings</Link>
+          <Link href="/settings" className="text-primary">Settings</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Separator className="h-px bg-slate-200 my-2" />
         <DropdownMenu.Item

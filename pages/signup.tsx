@@ -120,7 +120,7 @@ const Signup: NextPage = () => {
       <h1 className="text-2xl font-bold text-center">Create an Account</h1>
       <Card>
         <CardContent className="space-y-4 pt-6">
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSignup} className="space-y-3">
             <Input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
             <Input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />
             <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />

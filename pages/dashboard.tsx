@@ -38,7 +38,7 @@ const Dashboard = ({ user }: { user: { id: string; email: string } }) => {
       <div className="grid gap-6 md:grid-cols-2">
         <Link
           href="/profile"
-          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition"
+          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition no-underline"
         >
           <User className="w-6 h-6 text-green-600" />
           <div>
@@ -48,7 +48,7 @@ const Dashboard = ({ user }: { user: { id: string; email: string } }) => {
         </Link>
         <Link
           href="/burn-rate-calculator"
-          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition"
+          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition no-underline"
         >
           <Calculator className="w-6 h-6 text-green-600" />
           <div>
@@ -58,7 +58,7 @@ const Dashboard = ({ user }: { user: { id: string; email: string } }) => {
         </Link>
         <Link
           href="/referrals"
-          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition"
+          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition no-underline"
         >
           <Users className="w-6 h-6 text-green-600" />
           <div>
@@ -68,7 +68,7 @@ const Dashboard = ({ user }: { user: { id: string; email: string } }) => {
         </Link>
         <Link
           href="/settings"
-          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition"
+          className="flex items-center gap-4 p-4 bg-white border rounded-lg shadow hover:bg-slate-50 transition no-underline"
         >
           <Cog className="w-6 h-6 text-green-600" />
           <div>
