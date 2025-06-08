@@ -116,7 +116,7 @@ const Signup: NextPage = () => {
   };
 
   return (
-    <div className="grid gap-6 p-6 max-w-md mx-auto">
+    <div className="grid gap-6 p-6 max-w-md mx-auto min-h-screen bg-gradient-to-br from-white to-green-50 place-content-center">
       <h1 className="text-2xl font-bold text-center">Create an Account</h1>
       <Card>
         <CardContent className="space-y-4 pt-6">
