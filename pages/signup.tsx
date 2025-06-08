@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { NextPage } from 'next';
@@ -16,7 +16,51 @@ const Signup: NextPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [gdprConsented, setGdprConsented] = useState(false);
+  const [locationCity, setLocationCity] = useState('');
+  const [locationCountry, setLocationCountry] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            async ({ coords }) => {
+              try {
+                const res = await fetch(
+                  `https://nominatim.openstreetmap.org/reverse?lat=${coords.latitude}&lon=${coords.longitude}&format=json`
+                );
+                const data = await res.json();
+                setLocationCity(
+                  data.address.city || data.address.town || data.address.village || ''
+                );
+                setLocationCountry(data.address.country || '');
+              } catch {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                setLocationCity(data.city || '');
+                setLocationCountry(data.country_name || '');
+              }
+            },
+            async () => {
+              const res = await fetch('https://ipapi.co/json/');
+              const data = await res.json();
+              setLocationCity(data.city || '');
+              setLocationCountry(data.country_name || '');
+            }
+          );
+        } else {
+          const res = await fetch('https://ipapi.co/json/');
+          const data = await res.json();
+          setLocationCity(data.city || '');
+          setLocationCountry(data.country_name || '');
+        }
+      } catch {
+        // ignore errors silently
+      }
+    };
+    fetchLocation();
+  }, []);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +82,15 @@ const Signup: NextPage = () => {
       const res = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, gdprConsented, referralCode }),
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          gdprConsented,
+          referralCode,
+          location_city: locationCity,
+          location_country: locationCountry,
+        }),
       });
 
 

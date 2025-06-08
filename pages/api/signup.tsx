@@ -6,7 +6,15 @@ import { randomBytes } from 'crypto';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end('Method Not Allowed');
 
-  const { name, email, password, gdprConsented, referralCode } = req.body;
+  const {
+    name,
+    email,
+    password,
+    gdprConsented,
+    referralCode,
+    location_city,
+    location_country,
+  } = req.body;
 
 
   if (!name || !email || !password || gdprConsented !== true) {
@@ -60,7 +68,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             'Content-Type': 'application/json',
             Authorization: `Bearer ${process.env.SENDFOX_API_TOKEN}`,
           },
-          body: JSON.stringify({ email, first_name: name }),
+          body: JSON.stringify({
+            email,
+            first_name: name,
+            location_city,
+            location_country,
+          }),
         });
     
         if (!res.ok) {
