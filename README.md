@@ -47,15 +47,16 @@ SENDFOX_API_TOKEN=""
 
 Run `npx prisma db push` to create the SQLite database defined in `prisma/schema.prisma`.
 
-## Building Styles
+## Building styles
 
-Tailwind CSS is compiled automatically when running the development server:
+Tailwind CSS is processed through PostCSS. Running the development server will
+compile the styles automatically:
 
 ```bash
 npm run dev
 ```
 
-For a one-off build you can run the Tailwind CLI directly:
+If you prefer to build the CSS manually you can watch the files with:
 
 ```bash
 npx tailwindcss -o styles/tailwind.css --watch
