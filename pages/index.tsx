@@ -1,10 +1,11 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { NextPage } from 'next';
+import Link from 'next/link'
+import Image from 'next/image'
+import { NextPage } from 'next'
+import { Button } from '@/components/ui/button'
 
 const Home: NextPage = () => {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-white to-slate-100 px-4 py-16 flex flex-col items-center text-center">
+    <main className="min-h-screen bg-gradient-to-br from-white to-green-50 px-4 py-16 flex flex-col items-center text-center">
       <div className="max-w-4xl w-full flex flex-col md:flex-row items-center justify-between gap-12">
         <div className="flex-1">
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl mb-4 text-slate-900 text-left md:text-left">
@@ -16,9 +17,9 @@ const Home: NextPage = () => {
           </p>
 
           <Link href="/signup">
-            <button className="px-6 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition">
+            <Button size="lg" className="rounded-xl px-6 py-3">
               Get Started — It's Free
-            </button>
+            </Button>
           </Link>
         </div>
 
